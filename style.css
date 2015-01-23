@@ -1,0 +1,17 @@
+/* Put your css in here */
+
+.board-diagrams {
+  clear: both;
+}
+.board-diagram {
+  float: left;
+  margin-right: 10px;
+}
+
+.hovering {
+  background-color: #ddeeee;
+}
+
+.unavailable {
+  background-color: #ffaaaa;
+}
