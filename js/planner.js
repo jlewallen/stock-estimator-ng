@@ -162,16 +162,18 @@
         for (var i = 0; i < needed.quantity; ++i) {
           if (isPanel(needed)) {
             var sourceStock = getAvailablePanelStockFor(needed);
-            var pieces = Math.ceil(needed.width / sourceStock.width);
-            for (var piece = 0; piece < pieces; ++piece) {
-              var panelPart = { 
-                thickness: needed.thickness, 
-                width: sourceStock.width, 
-                length: needed.length,
-                panel: true,
-                panelWidth: needed.width
-              };
-              layoutStock(panelPart, needed);
+            if (!_.isUndefined(sourceStock)) {
+              var pieces = Math.ceil(needed.width / sourceStock.width);
+              for (var piece = 0; piece < pieces; ++piece) {
+                var panelPart = { 
+                  thickness: needed.thickness, 
+                  width: sourceStock.width, 
+                  length: needed.length,
+                  panel: true,
+                  panelWidth: needed.width
+                };
+                layoutStock(panelPart, needed);
+              }
             }
           }
           else {

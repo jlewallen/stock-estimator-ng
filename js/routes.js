@@ -7,11 +7,11 @@
   app.config(function($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl : 'layout.html',
+        templateUrl : 'html/layout.html',
         controller  : 'layoutController'
       })
       .when('/cost', {
-        templateUrl : 'cost.html',
+        templateUrl : 'html/cost.html',
         controller  : 'costController'
       });
   });

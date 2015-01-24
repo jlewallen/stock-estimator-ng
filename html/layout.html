@@ -2,38 +2,45 @@
   <h4>Available Stock</h4>
 
   <div class="row">
-    <select class="form-control" ng-options="stockSet as stockSet.name for stockSet in stockSets" ng-model="stockSet" ng-change="chooseStockSet(stockSet)">
-    </select>
+    <div class="col-md-6">
+      <select class="form-control" ng-options="stockSet as stockSet.name for stockSet in stockSets" ng-model="stockSet" ng-change="chooseStockSet(stockSet)">
+      </select>
+    </div>
   </div>
   
   <div class="row">
-  <table class="table">
-    <thead>
-      <th>Thickness</th>
-      <th>Width</th>
-      <th>Length</th>
-      <th>$/bdft</th>
-    </thead>
-    <tbody>
-      <tr ng-repeat="board in available">
-        <td><input type="number" class="col-xs-2 form-control" ng-model="board.thickness"></td>
-        <td><input type="number" class="col-xs-2 form-control" ng-model="board.width"></td>
-        <td><input type="number" class="col-xs-2 form-control" ng-model="board.length"></td>
-        <td><input type="number" class="col-xs-2 form-control" ng-model="board.perBoardFoot"></td>
-        <td><button class="btn btn-warning" ng-click="removeRow(available, board)">Remove</button></td>
-      </tr>
-    </tbody>
-  </table>
+    <div class="col-md-6">
+    <table class="table">
+      <thead>
+        <th>Thickness</th>
+        <th>Width</th>
+        <th>Length</th>
+        <th>$/bdft</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="board in available">
+          <td><input type="number" class="col-xs-2 form-control" ng-model="board.thickness"></td>
+          <td><input type="number" class="col-xs-2 form-control" ng-model="board.width"></td>
+          <td><input type="number" class="col-xs-2 form-control" ng-model="board.length"></td>
+          <td><input type="number" class="col-xs-2 form-control" ng-model="board.perBoardFoot"></td>
+          <td><button class="btn btn-warning" ng-click="removeRow(available, board)">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
   </div>
 
   <h4>Cut List</h4>
 
   <div class="row">
-    <select class="form-control" ng-options="cutList as cutList.name for cutList in cutLists" ng-model="cutList" ng-change="chooseCutList(cutList)">
-    </select>
+    <div class="col-md-6">
+      <select class="form-control" ng-options="cutList as cutList.name for cutList in cutLists" ng-model="cutList" ng-change="chooseCutList(cutList)">
+      </select>
+    </div>
   </div>
   
   <div class="row">
+  <div class="col-md-6">
   <table class="table">
     <thead>
       <th>Quantity</th>
@@ -55,15 +62,19 @@
     </tbody>
   </table>
   </div>
-  
-  <div class="board-diagrams">
-    <div ng-repeat="board in buy" class="board-diagram">
-      <p>{{board.thickness}} x {{board.length}}</p>
-      <p>{{board.efficiency | number}}%</p>
-      <div board-diagram="board" all-boards="buy"></div>
+
+  <div class="col-md-6">
+    <div class="board-diagrams">
+      <div ng-repeat="board in buy" class="board-diagram">
+        <p>{{board.thickness}} x {{board.length}}</p>
+        <p>{{board.efficiency | number}}%</p>
+        <div board-diagram="board" all-boards="buy"></div>
+      </div>
     </div>
   </div>
 
+  </div>
+  
   <div class="row">
     
   </div>

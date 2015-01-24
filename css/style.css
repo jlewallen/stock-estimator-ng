@@ -15,3 +15,6 @@
 .unavailable {
   background-color: #ffaaaa;
 }
+html {
+  overflow-y: scroll;
+}
