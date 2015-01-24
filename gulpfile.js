@@ -12,25 +12,6 @@ gulp.task("browserify", function() {
 	return gulp.src(['./js/*.js'])
 		.pipe(browserified)
 		.pipe(gulp.dest('./build'));
-/*
-
-	var bundler = browserify({
-		entries: ['js/app'],
-		extensions: ['.js'],
-		cache: {},
-		packageCache: {}
-		// fullPaths: true
-	});
-
-	var bundle = function() {
-		return bundler
-			.bundle()
-			.pipe(source("bundle.js"))
-			.pipe(gulp.dest("build"));
-		
-	};
-
-	return bundle();*/
 });
 
 gulp.task('watch', ['browserify'], function() {

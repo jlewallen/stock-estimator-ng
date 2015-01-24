@@ -333,15 +333,29 @@ app.controller('layoutController', function($scope) {
     { quantity: 4, thickness: 0.75, width: 0.75, length: 4 },
     { quantity: 2, thickness: 0.5, width: 2, length: 23.125 }
   ];
-  
-  $scope.necessary = dutchChest;
-  // $scope.necessary = frameSaw;
-  
-  $scope.available = [
-    { thickness: 0.75, width: 11.25, length: 96 },
-    { thickness: 0.5, width: 4, length: 36 },
-    { thickness: 1.625, width: 6, length: 96 }
+  $scope.cutLists = [
+    { name: 'Dutch Tool Chest', necessary: dutchChest },
+    { name: 'Frame Saw', necessary: frameSaw }
   ];
+
+  $scope.stockSets = [
+    { name: 'Home Depot - Construction', available: [
+    	{ thickness: 0.75, width: 11.25, length: 96 },
+    	{ thickness: 0.5, width: 4, length: 36 }
+    ]},
+    { name: 'Hardwood Dealer', available: [
+	{ thickness: 1.625, width: 6, length: 96 }
+    ]}
+  ];
+
+  $scope.available = [];
+  $scope.chooseStockSet = function(set) {
+    $scope.available = set.available;
+  };
+
+  $scope.chooseCutList = function(cutList) {
+    $scope.necessary = cutList.necessary;
+  };
   
   function isValidBoard(board) {
     if (_.isUndefined(board.width) || _.isUndefined(board.thickness) || _.isUndefined(board.length)) {
@@ -375,6 +389,11 @@ app.controller('layoutController', function($scope) {
   };
   
   $scope.$watch("[necessary, available]", function() {
+    if (_.isEmpty($scope.available) || _.isEmpty($scope.necessary)) {
+      console.log("incomplete");
+      return;
+    }
+
     var planner = new Planner();
     var buy = planner.calculate(_.where($scope.available, isValidBoard), _.where($scope.necessary, isValidBoard));
     

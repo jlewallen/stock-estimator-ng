@@ -1,5 +1,10 @@
 <div>
   <h4>Available Stock</h4>
+
+  <div class="row">
+    <select class="form-control" ng-options="stockSet as stockSet.name for stockSet in stockSets" ng-model="stockSet" ng-change="chooseStockSet(stockSet)">
+    </select>
+  </div>
   
   <div class="row">
   <table class="table">
@@ -22,6 +27,11 @@
   </div>
 
   <h4>Cut List</h4>
+
+  <div class="row">
+    <select class="form-control" ng-options="cutList as cutList.name for cutList in cutLists" ng-model="cutList" ng-change="chooseCutList(cutList)">
+    </select>
+  </div>
   
   <div class="row">
   <table class="table">
