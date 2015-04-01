@@ -47,22 +47,22 @@
 
   app.controller('layoutController', function($scope) {
     var frameSaw = [
-      { quantity: 2, thickness: 1.625, width: 1.375, length: 66 },
-      { quantity: 2, thickness: 1.625, width: 3, length: 24 },
+      { quantity: 2, thickness: 1.625, width: 1.375, length: 66, name: "" },
+      { quantity: 2, thickness: 1.625, width: 3, length: 24, name: "" },
     ];
     var dutchChest = [
-      { quantity: 2, thickness: 0.75, width: 11.25, length: 30.125 },
-      { quantity: 1, thickness: 0.75, width: 11.25, length: 27 },
-      { quantity: 2, thickness: 0.75, width: 11.25, length: 26 },
-      { quantity: 1, thickness: 0.75, width: 7, length: 27 },
-      { quantity: 1, thickness: 0.75, width: 1.5, length: 27 },
-      { quantity: 1, thickness: 0.75, width: 15.5, length: 28.375 },
-      { quantity: 2, thickness: 0.75, width: 1.25, length: 12 },
-      { quantity: 1, thickness: 0.75, width: 30.5, length: 27 },
-      { quantity: 1, thickness: 0.75, width: 15, length: 27 },
-      { quantity: 2, thickness: 0.5, width: 1.5, length: 15 },
-      { quantity: 4, thickness: 0.75, width: 0.75, length: 4 },
-      { quantity: 2, thickness: 0.5, width: 2, length: 23.125 }
+      { quantity: 2, thickness: 0.75, width: 11.25, length: 30.125, name: "Sides" },
+      { quantity: 1, thickness: 0.75, width: 11.25, length: 27, name: "Bottom" },
+      { quantity: 2, thickness: 0.75, width: 11.25, length: 26, name: "Shelves" },
+      { quantity: 1, thickness: 0.75, width: 7, length: 27, name: "Front" },
+      { quantity: 1, thickness: 0.75, width: 1.5, length: 27, name: "Bottom Lip" },
+      { quantity: 1, thickness: 0.75, width: 15.5, length: 28.375, name: "Lid" },
+      { quantity: 2, thickness: 0.75, width: 1.25, length: 12, name: "Skids" },
+      { quantity: 1, thickness: 0.75, width: 30.5, length: 27, name: "Back" },
+      { quantity: 1, thickness: 0.75, width: 15, length: 27, name: "Fall-front" },
+      { quantity: 2, thickness: 0.5, width: 1.5, length: 15, name: "Panel Battens" },
+      { quantity: 4, thickness: 0.75, width: 0.75, length: 4, name: "Catches" },
+      { quantity: 2, thickness: 0.5, width: 2, length: 23.125, name: "Locks" }
     ];
     $scope.cutLists = [
       { name: 'Dutch Tool Chest', necessary: dutchChest },
