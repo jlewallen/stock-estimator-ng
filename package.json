@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "browserify": "^6.2.0",
+    "color-scheme": "0.0.5",
     "envify": "^3.0.0",
     "gulp": "^3.8.10",
     "gulp-if": "^1.2.5",

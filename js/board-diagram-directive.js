@@ -27,7 +27,10 @@
           var w = toX(part.width);
           var h = toY(part.length);
 
-          if (part.cutoff) {
+          if (_.isString(part.color)) {
+            ctx.fillStyle = '#' + part.color;
+          }
+          else if (part.cutoff) {
             ctx.fillStyle = '#ddeeee';
           }
           else if (part.raw) {

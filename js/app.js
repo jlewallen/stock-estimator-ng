@@ -6,6 +6,7 @@
   var _ = require("lodash");
   var Planner = require("./planner");
   var app = require("./wood-app");
+  var colors = require("./colors");
 
   require("./board-diagram-directive");
   require("./routes");
@@ -69,12 +70,17 @@
     ];
 
     $scope.stockSets = [
-      { name: 'Home Depot - Construction', available: [
+      { name: 'Home Depot - Select Pine', available: [
         { thickness: 0.75, width: 11.25, length: 96 },
         { thickness: 0.5, width: 4, length: 36 }
       ]},
-      { name: 'Hardwood Dealer', available: [
-    { thickness: 1.625, width: 6, length: 96 }
+      { name: 'Home Depot - Construction', available: [
+        { thickness: 1.75, width: 12, length: 96 },
+        { thickness: 1.75, width: 10, length: 96 }
+      ]},
+      { name: 'Hardwood', available: [
+        { thickness: 0.750, width: 6, length: 96 },
+        { thickness: 1.625, width: 6, length: 96 }
       ]}
     ];
 
@@ -84,7 +90,7 @@
     };
 
     $scope.chooseCutList = function(cutList) {
-      $scope.necessary = cutList.necessary;
+      $scope.necessary = colors(cutList.necessary);
     };
     
     function isValidBoard(board) {

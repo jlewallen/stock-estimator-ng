@@ -49,6 +49,7 @@
       <th>Width</th>
       <th>Length</th>
       <th></th>
+      <th></th>
     </thead>
     <tbody>
       <tr ng-repeat="board in necessary" ng-class="{ 'hovering': board.hovering, 'unavailable' : board.unavailable }">
@@ -57,6 +58,7 @@
         <td><input type="number" class="col-xs-2 form-control" ng-model="board.thickness"></td>
         <td><input type="number" class="col-xs-2 form-control" ng-model="board.width"></td>
         <td><input type="number" class="col-xs-2 form-control" ng-model="board.length"></td>
+        <td style="background-color: {{'#' + board.color}}">&nbsp;&nbsp;&nbsp;&nbsp;</td>
         <td><button class="btn btn-warning" ng-click="removeRow(necessary, board)">Remove</button></td>
       </tr>
     </tbody>

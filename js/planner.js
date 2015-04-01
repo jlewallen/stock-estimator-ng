@@ -164,15 +164,18 @@
             var sourceStock = getAvailablePanelStockFor(needed);
             if (!_.isUndefined(sourceStock)) {
               var pieces = Math.ceil(needed.width / sourceStock.width);
+              var widthRemaining = needed.width;
               for (var piece = 0; piece < pieces; ++piece) {
                 var panelPart = { 
                   thickness: needed.thickness, 
-                  width: sourceStock.width, 
+                  width: Math.min(sourceStock.width, widthRemaining), 
                   length: needed.length,
                   panel: true,
-                  panelWidth: needed.width
+                  panelWidth: needed.width,
+                  color: needed.color
                 };
                 layoutStock(panelPart, needed);
+                widthRemaining -= sourceStock.width;
               }
             }
           }
