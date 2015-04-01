@@ -93,6 +93,9 @@
       $scope.necessary = colors(cutList.necessary);
     };
     
+    $scope.chooseStockSet($scope.stockSets[0]);
+    $scope.chooseCutList($scope.cutLists[0]);
+
     function isValidBoard(board) {
       if (_.isUndefined(board.width) || _.isUndefined(board.thickness) || _.isUndefined(board.length)) {
         return false;

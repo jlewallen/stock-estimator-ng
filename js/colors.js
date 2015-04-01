@@ -2,10 +2,9 @@ var ColorScheme = require('./color-scheme.min');
 var _ = require("lodash");
 
 var scm = new ColorScheme();
-scm.from_hue(0)
-  .from_hex('dd88dd')
-  .scheme('analogic')
-  .distance(0.20)
+scm.from_hue(226)
+  .scheme('tetrade')
+  .distance(0.5)
   .add_complement(false)
   .variation('default')
   .web_safe(false);
