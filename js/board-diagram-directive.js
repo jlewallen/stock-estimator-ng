@@ -31,10 +31,10 @@
             ctx.fillStyle = '#' + part.color;
           }
           else if (part.cutoff) {
-            ctx.fillStyle = '#ddeeee';
+            ctx.fillStyle = '#dfdfdf';
           }
           else if (part.raw) {
-            ctx.fillStyle = '#cecece';
+            ctx.fillStyle = '#afafaf';
           }
           else if (part.panel) {
             ctx.fillStyle = '#dd20f6';
@@ -65,8 +65,8 @@
 
         $scope.$watch(attrs.allBoards, function() {
           var allBoards = $scope.$eval(attrs.allBoards);
-          var longest = _.max(_.pluck(allBoards, 'length'));
-          var widest = _.max(_.pluck(allBoards, 'width'));
+          var longest = _.max(_.map(allBoards, 'length'));
+          var widest = _.max(_.map(allBoards, 'width'));
           
           var board = $scope.$eval(attrs.boardDiagram);
           var maxX = 64.0;

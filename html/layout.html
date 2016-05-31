@@ -1,108 +1,104 @@
 <div>
-  <h4>Available Stock</h4>
 
   <div class="row">
     <div class="col-md-6">
-      <select class="form-control" ng-options="stockSet as stockSet.name for stockSet in stockSets" ng-model="stockSet" ng-change="chooseStockSet(stockSet)">
-      </select>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div class="col-md-6">
-    <table class="table">
-      <thead>
-        <th>Thickness</th>
-        <th>Width</th>
-        <th>Length</th>
-        <th>$/bdft</th>
-      </thead>
-      <tbody>
-        <tr ng-repeat="board in available">
-          <td><input type="number" class="col-xs-2 form-control" ng-model="board.thickness"></td>
-          <td><input type="number" class="col-xs-2 form-control" ng-model="board.width"></td>
-          <td><input type="number" class="col-xs-2 form-control" ng-model="board.length"></td>
-          <td><input type="number" class="col-xs-2 form-control" ng-model="board.perBoardFoot"></td>
-          <td><button class="btn btn-warning" ng-click="removeRow(available, board)">Remove</button></td>
-        </tr>
-      </tbody>
-    </table>
     </div>
   </div>
 
-  <h4>Cut List</h4>
-
   <div class="row">
     <div class="col-md-6">
+      <h4>Cut List</h4>
+
       <select class="form-control" ng-options="cutList as cutList.name for cutList in cutLists" ng-model="cutList" ng-change="chooseCutList(cutList)">
       </select>
+
+      <table class="table">
+        <thead>
+          <th>Quantity</th>
+          <th>Name</th>
+          <th>Thickness</th>
+          <th>Width</th>
+          <th>Length</th>
+          <th></th>
+          <th></th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="board in necessary" ng-class="{ 'hovering': board.hovering, 'unavailable' : board.unavailable }">
+            <td><input type="number" class="col-xs-2 form-control" ng-model="board.quantity"></td>
+            <td><input type="text"   class="col-xs-2 form-control" ng-model="board.name"></td>
+            <td><input type="number" class="col-xs-2 form-control" ng-model="board.thickness"></td>
+            <td><input type="number" class="col-xs-2 form-control" ng-model="board.width"></td>
+            <td><input type="number" class="col-xs-2 form-control" ng-model="board.length"></td>
+            <td style="background-color: {{'#' + board.color}}">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td><button class="btn btn-warning" ng-click="removeRow(necessary, board)">Remove</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-6">
+      <h4>Available Stock</h4>
+
+      <select class="form-control" ng-options="stockSet as stockSet.name for stockSet in stockSets" ng-model="stockSet" ng-change="chooseStockSet(stockSet)">
+      </select>
+
+      <table class="table">
+        <thead>
+          <th>Exclude</th>
+          <th>Thickness</th>
+          <th>Width</th>
+          <th>Length</th>
+          <th>$/bdft</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="board in available">
+            <td><input type="checkbox" class="" ng-model="board.exclude"></td>
+            <td><input type="number" class="col-xs-2 form-control" ng-model="board.thickness"></td>
+            <td><input type="number" class="col-xs-2 form-control" ng-model="board.width"></td>
+            <td><input type="number" class="col-xs-2 form-control" ng-model="board.length"></td>
+            <td><input type="number" class="col-xs-2 form-control" ng-model="board.perBoardFoot"></td>
+            <td><button class="btn btn-warning" ng-click="removeRow(available, board)">Remove</button></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   
   <div class="row">
-  <div class="col-md-6">
-  <table class="table">
-    <thead>
-      <th>Quantity</th>
-      <th>Name</th>
-      <th>Thickness</th>
-      <th>Width</th>
-      <th>Length</th>
-      <th></th>
-      <th></th>
-    </thead>
-    <tbody>
-      <tr ng-repeat="board in necessary" ng-class="{ 'hovering': board.hovering, 'unavailable' : board.unavailable }">
-        <td><input type="number" class="col-xs-2 form-control" ng-model="board.quantity"></td>
-        <td><input type="text"   class="col-xs-2 form-control" ng-model="board.name"></td>
-        <td><input type="number" class="col-xs-2 form-control" ng-model="board.thickness"></td>
-        <td><input type="number" class="col-xs-2 form-control" ng-model="board.width"></td>
-        <td><input type="number" class="col-xs-2 form-control" ng-model="board.length"></td>
-        <td style="background-color: {{'#' + board.color}}">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td><button class="btn btn-warning" ng-click="removeRow(necessary, board)">Remove</button></td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
-
-  <div class="col-md-6">
-    <div class="board-diagrams">
-      <div ng-repeat="board in buy" class="board-diagram">
-        <p>{{board.thickness}} x {{board.length}}</p>
-        <p>{{board.efficiency | number}}%</p>
-        <div board-diagram="board" all-boards="buy"></div>
+    <div class="col-md-12">
+      <h3>{{plan.efficiency.efficiency | number}}% overall efficiency</h3>
+      <div class="board-diagrams">
+        <div ng-repeat="board in buy" class="board-diagram">
+          <p>{{board.thickness}} x {{board.length}}</p>
+          <p>{{board.efficiency | number}}%</p>
+          <div board-diagram="board" all-boards="buy"></div>
+        </div>
       </div>
     </div>
-  </div>
-
-  </div>
-  
-  <div class="row">
-    
   </div>
 
   <h4>Purchase List</h4>
   
   <div class="row">
-  <table class="table">
-    <thead>
-      <th>Thickness</th>
-      <th>Width</th>
-      <th>Length</th>
-      <th>Boards</th>
-      <th>Linear Feet</th>
-      <th>Bdft</th>
-    </thead>
-    <tbody>
-      <tr ng-repeat="board in purchase">
-        <td>{{board.thickness}}</td>
-        <td>{{board.width}}</td>
-        <td>{{board.length}}</td>
-        <td>{{board.quantity}}</td>
-        <td>{{board.feet}}</td>
-        <td>{{board.bdft}}</td>
-      </tr>
-    </tbody>
-  </table>
+    <table class="table">
+      <thead>
+        <th>Thickness</th>
+        <th>Width</th>
+        <th>Length</th>
+        <th>Boards</th>
+        <th>Linear Feet</th>
+        <th>Bdft</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="board in purchase">
+          <td>{{board.thickness}}</td>
+          <td>{{board.width}}</td>
+          <td>{{board.length}}</td>
+          <td>{{board.quantity}}</td>
+          <td>{{board.feet}}</td>
+          <td>{{board.bdft}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

@@ -14,31 +14,35 @@
 
     function sortLargestToSmallest(collection) {
       collection.sort(function(a, b) {
-        if (a.width == b.width)
+        if (a.width != b.width)
+          return b.width - a.width;
+        if (a.length != b.length)
           return b.length - a.length;
-        return b.width - a.width;
+        return b.quantity - a.quantity;
       });
       return collection;  
     }
     
     function sortSmallestToLargest(collection) {
       collection.sort(function(a, b) {
-        if (a.width == b.width)
+        if (a.width != b.width)
+          return a.width - b.width;
+        if (a.length != b.length)
           return a.length - b.length;
-        return a.width - b.width;
+        return a.quantity - b.quantity;
       });
       return collection;  
     }
 
     function getAvailablePanelStockFor(needed) {
-      return _.first(_.where(self.available, function(availStock) {
+      return _.first(_.filter(self.available, function(availStock) {
         return availStock.thickness == needed.thickness && 
                availStock.width <= needed.width;
       }));
     }
     
     function getAvailableSourceStockFor(needed) {
-      return _.first(_.where(self.available, function(availStock) {
+      return _.first(_.filter(self.available, function(availStock) {
         return availStock.thickness == needed.thickness && 
               (availStock.width >= needed.width || availStock.width === 0) && 
               (availStock.length >= needed.length);
@@ -46,13 +50,13 @@
     }
     
     function findCutoffFor(required) {
-      return _.first(_.where(self.cutoffs, function(cutoff) {
+      return _.first(_.filter(self.cutoffs, function(cutoff) {
         return cutoff.thickness === required.thickness && cutoff.width >= required.width && cutoff.length >= required.length;
       }));
     }
     
     function isPanel(needed) {
-      return !_.any(self.available, function(availStock) {
+      return !_.some(self.available, function(availStock) {
         return needed.width <= availStock.width;
       });
     }
@@ -112,7 +116,7 @@
           yields: []
         });
       }
-      if (_.any(currentCutoffs)) {
+      if (_.some(currentCutoffs)) {
         self.cutoffs = sortSmallestToLargest(self.cutoffs.concat(currentCutoffs));
         sourceStock.yields = sourceStock.yields.concat(currentCutoffs);
       }
@@ -136,28 +140,50 @@
       return Math.ceil(board.thickness) * board.width * board.length;
     }
     
-    function calculateBoardEfficiency(board) {
-      var yields = _.where(flattenYields(board), function(board) { return !board.cutoff; });
-      var usedVolume = _.reduce(_.map(yields, boardVolume), function(sum, num) { return sum + num; }, 0);
-      var totalVolume = boardVolume(board);
+    function calculateSingleBoardEfficiency(board) {
+      var efficiency = calculateEfficiency(_([board]));
+      return _.extend(efficiency, board);
+    }
 
-      // console.log(totalVolume, usedVolume);
-      return _.extend({ 
+    function calculateEfficiency(boards) {
+      if (!boards.some()) {
+        return {
+          totalVolume: 0,
+          usedVolume: 0,
+          efficiency: 0
+        };
+      }
+      var yields = boards.map(flattenYields).flatten().filter(function(board) { return !board.cutoff; });
+      var usedVolume = yields.map(boardVolume).reduce(function(sum, num) { return sum + num; }, 0);
+      var totalVolume = boards.map(boardVolume).reduce(function(sum, num) { return sum + num; }, 0);
+      return { 
         totalVolume: totalVolume,
         usedVolume: usedVolume,
         efficiency: usedVolume / totalVolume * 100
-      }, board);
+      };
     }
+
+    var self = this;
+
+    this.calculateForAllAvailableAndPickBest = function(allAvailable, necessary) {
+      var plans = _(allAvailable).map(function(available) {
+        return {
+          plan: self.calculate(available.available, necessary)
+        };
+      });
+
+      console.log(plans.value());
+
+      return {};
+    };
     
     this.calculate = function(available, necessary) {
       self.cutoffs = [];
       self.buy = [];
       self.available = _.sortBy(available, 'width').reverse();
 
-      // console.log("Calc");
-
       var necessaryByWidthAndLength = sortLargestToSmallest(_.clone(necessary));
-      while (_.any(necessaryByWidthAndLength)) {
+      while (_.some(necessaryByWidthAndLength)) {
         var needed = necessaryByWidthAndLength.shift();
         for (var i = 0; i < needed.quantity; ++i) {
           if (isPanel(needed)) {
@@ -185,7 +211,11 @@
         }
       }
 
-      return _.map(self.buy, calculateBoardEfficiency);
+      var withEfficiency = _.map(self.buy, calculateSingleBoardEfficiency);
+      return {
+        efficiency: calculateEfficiency(_(self.buy)),
+        buy: withEfficiency 
+      };
     };
     
     return self;  
